@@ -16,6 +16,7 @@ import java.util.stream.Stream;
  */
 
 public abstract class ConversionAgent<ObjectSequentDataType, TypeOfObjectSequence> {
+	
     protected ObjectSequentDataType objectSequence;
 
     public ConversionAgent(ObjectSequentDataType objectSequence) {

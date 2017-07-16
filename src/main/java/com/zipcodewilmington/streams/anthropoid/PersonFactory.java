@@ -3,14 +3,23 @@ package com.zipcodewilmington.streams.anthropoid;
 import com.zipcodewilmington.streams.tools.RandomUtils;
 import com.zipcodewilmington.streams.tools.StringUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.ObjIntConsumer;
+import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
  * Created by leon on 5/1/17.
- * @ATTENTION_TO_STUDENTS You are FORBIDDEN from using loops of any sort within the definition of this class.
+ * @ATTENTION_TO_STUDENTS You are FORBIDDEN from using loops of any 
+ * sort within the definition of this class.
  */
 public final class PersonFactory {
     private PersonFactory() {
@@ -27,11 +36,12 @@ public final class PersonFactory {
         boolean isMale = RandomUtils.createBoolean(50);
         long personalId = System.nanoTime();
         Date birthDate = RandomUtils.createDate(1950, 2010);
-
+        
         Person randomPerson = new Person(name, age, isMale, personalId, birthDate, aliases);
         PersonWarehouse.addPerson(randomPerson);
         return randomPerson;
     }
+
 
     /**
      * Section 8.8
@@ -39,7 +49,11 @@ public final class PersonFactory {
      * @return - ArrayList of Person objects
      */ // TODO
     public static List<Person> createPersonList(int listSize) {
-        return null;
+		List<Person> result = new ArrayList<Person>(listSize);
+		Stream<Person> stream = createPersonStream(listSize);
+		result = stream
+				.collect(Collectors.toList());
+        return result;
     }
 
 
@@ -48,7 +62,9 @@ public final class PersonFactory {
      * @return - Array of Person objects
      */ // TODO
     public static Person[] createPersonArray(int arrayLength) {
-        return null;
+    	Stream<Person> stream = createPersonStream(arrayLength);
+        return stream.toArray(size -> new Person[arrayLength]);//?????????????????????????????
+        //?????????????? how does this work ???????????????????????????????
     }
 
 
@@ -58,6 +74,8 @@ public final class PersonFactory {
      * @return - Stream representation of collection of Person objects
      */ // TODO
     public static Stream<Person> createPersonStream(int streamCount) {
-        return null;
+        return Stream.
+				generate(() -> createRandomPerson())
+				.limit(streamCount);
     }
 }

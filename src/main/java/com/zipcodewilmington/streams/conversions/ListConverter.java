@@ -27,11 +27,17 @@ public final class ListConverter extends PersonConversionAgent<List<Person>> {
 
     //TODO
     public Stream<Person> toStream() {
-        return null;
+        return this.objectSequence.stream();
     }
 
     //TODO
-    public Person[] toArray() {
-        return null;
+    public Person[] toArray1() {
+        return (Person[]) this.toStream().toArray();
     }
+
+	@Override
+	public Person[] toArray() {
+		// TODO Auto-generated method stub
+		return toArray1();
+	}
 }
