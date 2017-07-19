@@ -25,18 +25,15 @@ public class StreamFilter {
 	//startingCharacter is a random capital letter
 	public StreamFilter() {	
 		this.personStream = PersonFactory.createPersonStream(100);
-		//this(Stream.empty(), null);
-		this.startingCharacter = (char)((int)'A'+Math.random()*((int)'Z'-(int)'A'+1))+"";
-	}
+		this.startingCharacter = RandomUtils.createCharacter('A', 'Z').toString();
+		}
 
 	/**
 	 * @param people - Array of person objects
 	 * @param startingCharacter - character to filter by
 	 */ //TODO
 	public StreamFilter(Person[] people, Character startingCharacter) {
-		//Arrays.stream(people).filter(p -> p.name.substring(0, 1).equals(startingCharacter));
-		this(Arrays.stream(people).filter(p -> p.name.substring(0, 1).equals(startingCharacter)),
-				startingCharacter);
+		this(Arrays.stream(people), startingCharacter);
 	}
 
 	/**
@@ -44,8 +41,7 @@ public class StreamFilter {
 	 * @param startingCharacter - character to filter by
 	 */ //TODO
 	public StreamFilter(List<Person> people, Character startingCharacter) {
-		//people.removeIf(p -> p.name.substring(0, 1).equals(startingCharacter));
-		this(people.stream().filter(p -> !p.name.substring(0, 1).equals(startingCharacter)), startingCharacter);
+		this(people.stream(), startingCharacter);
 	}
 
 
@@ -64,8 +60,10 @@ public class StreamFilter {
 	 * @return a list of person object whose name starts with `this.startingCharacter`
 	 */ //TODO
 	public List<Person> toListMultiLine() {
-		return Arrays.asList(this.personStream
-				.filter(p -> !p.name.substring(0, 1).equals(startingCharacter)));
+		return this
+		.personStream
+		.filter(p -> p.name.substring(0, 1)==startingCharacter)
+		.collect(Collectors.toList());
 	}
 
 
@@ -92,7 +90,12 @@ public class StreamFilter {
 	 * @return an array of person object whose name starts with `this.startingCharacter`
 	 */ //TODO
 	public Person[] toArrayMultiLine() {
-		return (Person[]) toListOneLine().toArray();
+		int size = (int) personStream
+				.filter(p -> p.name.substring(0, 1)==startingCharacter)
+				.count();
+		return this.personStream
+				.filter(p -> p.name.substring(0, 1)==startingCharacter)
+				.toArray(s -> new Person[size]);
 	}
 
 }

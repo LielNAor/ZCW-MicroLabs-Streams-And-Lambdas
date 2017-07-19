@@ -5,6 +5,8 @@ import com.zipcodewilmington.streams.tools.logging.LoggerHandler;
 import com.zipcodewilmington.streams.tools.logging.LoggerWarehouse;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -61,7 +63,7 @@ public final class PersonWarehouse {
      * @return a mapping of Person Id to the respective Person name
      */ // TODO
     public static Map<Long, String> getIdToNameMap() {
-        return null;//people.stream();
+    	return null;// people.stream().map((l, s) ) -> (p.personalId, p.name));
     }
 
 
@@ -69,7 +71,8 @@ public final class PersonWarehouse {
      * @return Stream of Stream of Aliases
      */ // TODO
     public static Stream<Stream<String>> getNestedAliases() {
-        return null;
+    	Stream<String[]> sOSA = people.stream().map(p -> p.aliases);
+        return sOSA.map(sA -> streamStringArray(sA));
     }
 
 
@@ -77,14 +80,24 @@ public final class PersonWarehouse {
      * @return Stream of all Aliases
      */ // TODO
     public static Stream<String> getAllAliases() {
-        return null;
+    	
+    	Stream<String[]> sOSA = people.stream().map(p -> p.aliases);
+    	//sOSA.map(s -> streamStringArray(s)).flatMap(s -> s);
+    	//sOSA.flatMap(s -> streamStringArray(sOSA));
+        return sOSA.map(s -> streamStringArray(s)).flatMap(s -> s);
+    }
+    
+    
+    public static Stream<String> streamStringArray(String[] sA){
+    	return Stream.of(sA);
     }
 
     /**
      * @return list of names of Person objects
      */ // TODO
     public static List<String> getNames() {
-        return null;
+        return Arrays.asList(people.stream()
+        		.map(p-> p.name));
     }
 
     /**

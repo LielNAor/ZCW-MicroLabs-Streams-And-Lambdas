@@ -50,7 +50,8 @@ public abstract class ConversionAgent<ObjectSequentDataType, TypeOfObjectSequenc
      * @param predicate Represents a predicate (boolean-valued function) of one argument
      * @return stream representation of respectively filtered
      */
-    public Stream<TypeOfObjectSequence> flatMap(Function<? super TypeOfObjectSequence, ? extends Stream<TypeOfObjectSequence>> predicate) {
+    public Stream<TypeOfObjectSequence> 
+    flatMap(Function<? super TypeOfObjectSequence, ? extends Stream<TypeOfObjectSequence>> predicate) {
         return toStream().flatMap(predicate);
     }
 }
