@@ -4,6 +4,7 @@ import com.zipcodewilmington.streams.tools.ReflectionUtils;
 import com.zipcodewilmington.streams.tools.logging.LoggerHandler;
 import com.zipcodewilmington.streams.tools.logging.LoggerWarehouse;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -63,7 +64,9 @@ public final class PersonWarehouse {
      * @return a mapping of Person Id to the respective Person name
      */ // TODO
     public static Map<Long, String> getIdToNameMap() {
-    	return null;// people.stream().map((l, s) ) -> (p.personalId, p.name));
+    	Map<Long, String> map = new HashMap<>();
+		people.stream().forEach(p -> map.put(p.personalId, p.name));
+		return map;
     }
 
 
@@ -96,8 +99,9 @@ public final class PersonWarehouse {
      * @return list of names of Person objects
      */ // TODO
     public static List<String> getNames() {
-        return Arrays.asList(people.stream()
-        		.map(p-> p.name));
+        List<String> list = new ArrayList<>();
+    	people.stream().forEach(p -> list.add(p.name));
+    	return list;
     }
 
     /**

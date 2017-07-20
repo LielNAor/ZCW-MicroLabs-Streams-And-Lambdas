@@ -90,12 +90,12 @@ public class StreamFilter {
 	 * @return an array of person object whose name starts with `this.startingCharacter`
 	 */ //TODO
 	public Person[] toArrayMultiLine() {
-		int size = (int) personStream
-				.filter(p -> p.name.substring(0, 1)==startingCharacter)
-				.count();
+//		/*int size = (int) personStream
+//				.filter(p -> p.name.substring(0, 1)==startingCharacter)
+//				.count();*/
 		return this.personStream
 				.filter(p -> p.name.substring(0, 1)==startingCharacter)
-				.toArray(s -> new Person[size]);
+				.toArray(/*s -> new Person[size]*/Person[]::new);
 	}
 
 }
